@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Portal</title>
+
+    <!-- CSS directly inside HTML -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #444;
+        }
+
+        input {
+            padding: 8px;
+            margin: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result, .error {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+            display: none;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .admin-section {
+            margin-top: 50px;
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .admin-section input {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Result Portal</h1>
+        
+        <div class="student-section">
+            <h2>Check Your Result</h2>
+            <label for="rollNumber">Enter Roll Number:</label>
+            <input type="text" id="rollNumber" placeholder="Enter Roll Number">
+            <button onclick="checkResult()">Check Result</button>
+            
+            <div id="result" class="result">
+                <h2>Result: <span id="resultMessage"></span></h2>
+            </div>
+            <div id="errorMessage" class="error"></div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Admin Panel</h2>
+            <label for="adminRollNumber">Roll Number:</label>
+            <input type="text" id="adminRollNumber" placeholder="Enter Roll Number">
+            <label for="adminResult">Result (Pass/Fail):</label>
+            <input type="text" id="adminResult" placeholder="Enter Result">
+            <button onclick="addResult()">Add Result</button>
+        </div>
+    </div>
+
+    <!-- JavaScript directly inside HTML -->
+    <script>
+        let results = {}; // This will hold student results
+
+        // Function to check result for students
+        function checkResult() {
+            const rollNumber = document.getElementById('rollNumber').value;
+            const resultMessage = document.getElementById('resultMessage');
+            const resultDiv = document.getElementById('result');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Clear previous result or error
+            errorMessage.innerHTML = '';
+            resultDiv.style.display = 'none';
+
+            // Check if the roll number exists in the results object
+            if (results[rollNumber]) {
+                resultMessage.innerText = results[rollNumber];
+                resultDiv.style.display = 'block';
+            } else {
+                errorMessage.innerHTML = 'Roll number not found. Please try again.';
+            }
+        }
+
+        // Function to add results from the admin panel
+        function addResult() {
+            const rollNumber = document.getElementById('adminRollNumber').value;
+            const result = document.getElementById('adminResult').value;
+
+            // Validate input
+            if (rollNumber && result) {
+                results[rollNumber] = result;
+                alert('Result added successfully!');
+
+                // Clear the admin input fields
+                document.getElementById('adminRollNumber').value = '';
+                document.getElementById('adminResult').value = '';
+            } else {
+                alert('Please enter both roll number and result.');
+            }
+        }
+    </script>
+</body>
+</html>
